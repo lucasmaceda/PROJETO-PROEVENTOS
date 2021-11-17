@@ -1,0 +1,53 @@
+<h2>Eventos</h2>
+<hr>
+
+<form action="" class="form-inline">
+  <div class="form-group mb-2 row">
+
+    <div class="col-md-3">
+      <input type="text" class="form-control" placeholder="buscar">
+    </div>
+
+    <button class="btn col-sm-2 btn-outline-success">
+      Buscar
+    </button>
+  </div>
+</form>
+
+<table class="table table-striped">
+  <thead class="table-dark">
+    <tr>
+      <th>#</th>
+      <th>Imagem</th>
+      <th>Tema</th>
+      <th>Local</th>
+      <th>Data</th>
+      <th>Qtd Pessoas</th>
+      <th>Lote</th>
+      <th>Opções</th>
+    </tr>
+  </thead>
+  <tbody *ngIf="eventos && eventos.length">
+    <tr *ngFor="let evento of eventos">
+      <td>{{evento.eventoId}}</td>
+      <td>
+        <img src="/assets/{{evento.imagemURL}}"
+             alt="foto"
+             width="100px">
+      </td>
+      <td>{{evento.tema}}</td>
+      <td>{{evento.local}}</td>
+      <td>{{evento.data}}</td>
+      <td>{{evento.qtdPessoas}}</td>
+      <td>{{evento.local}}</td>
+      <td></td>
+    </tr>
+  </tbody>
+  <tfoot *ngIf="!eventos.length">
+    <tr>
+      <td colspan="8" class="text-center">
+        <h4>Nenhum evento encontrado!</h4>
+      </td>
+    </tr>
+  </tfoot>
+</table>

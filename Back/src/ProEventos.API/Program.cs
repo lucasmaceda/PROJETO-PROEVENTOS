@@ -9,8 +9,7 @@ builder.Services.AddDbContext<DataContext>(
                 .UseSqlite(builder
                     .Configuration
                     .GetConnectionString("Default")
-                )
-);
+                ));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at 
@@ -37,6 +36,10 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseCors(x => x.AllowAnyHeader()
+                  .AllowAnyMethod()
+                  .AllowAnyOrigin());
 
 app.MapControllers();
 
