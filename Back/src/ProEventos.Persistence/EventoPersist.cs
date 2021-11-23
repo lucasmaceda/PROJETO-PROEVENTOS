@@ -23,7 +23,7 @@ namespace ProEventos.Persistence
             IQueryable<Evento> query = _context
                                             .Eventos
                                             .Include(e => e.Lotes)
-                                            .Include(e => e.RedeSociais);
+                                            .Include(e => e.RedesSociais);
             if(includePalestrantes)
             {   
                 query = query
@@ -40,7 +40,7 @@ namespace ProEventos.Persistence
             IQueryable<Evento> query = _context
                                             .Eventos
                                             .Include(e => e.Lotes)
-                                            .Include(e => e.RedeSociais);
+                                            .Include(e => e.RedesSociais);
             if(includePalestrantes)
             {   
                 query = query
@@ -60,7 +60,7 @@ namespace ProEventos.Persistence
             IQueryable<Evento> query = _context
                                             .Eventos
                                             .Include(e => e.Lotes)
-                                            .Include(e => e.RedeSociais);
+                                            .Include(e => e.RedesSociais);
             if(includePalestrantes)
             {   
                 query = query
