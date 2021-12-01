@@ -1,8 +1,8 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm"
+     *ngIf="showMenu()">
   <div class="container">
-    <a class="navbar-brand"
-       routerLink="dashboard">
-      ProEventos
+    <a class="navbar-brand" routerLink="dashboard">
+      <i class="fa fa-users mb-2"></i>
     </a>
 
     <button class="navbar-toggler"
@@ -51,14 +51,18 @@
              aria-expanded="false">
             Vinícius
           </a>
+
           <div *dropdownMenu
                class="dropdown-menu"
                aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" routerLink="perfil">
+
+            <a class="dropdown-item" routerLink="/user/perfil">
               Perfil
             </a>
+
             <div role="separator" class="divider"></div>
-            <a class="dropdown-item" href="#">
+
+            <a class="dropdown-item" href="/user/login">
               Sair
             </a>
           </div>

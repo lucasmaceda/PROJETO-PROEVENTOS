@@ -1,3 +1,139 @@
-<p>
-  evento-detalhe works!
-</p>
+<div class="card rounded shadow-sm p-3">
+
+  <form [formGroup]="form!">
+
+    <div class="p-3">
+      <div class="row">
+        <div class="form-group col-md-12">
+          <label>Tema</label>
+          <input type="text"
+                 class="form-control"
+                 formControlName="Tema"
+                 [ngClass]="{'is-invalid':
+                                  formGet.Tema.errors &&
+                                  formGet.Tema.touched }"
+                 placeholder="Insira o Tema">
+
+          <div class="invalid-feedback"
+               *ngIf="formGet.Tema.errors?.required">
+            Tema é obrigatório.
+          </div>
+
+          <div class="invalid-feedback"
+               *ngIf="formGet.Tema.errors?.minlength">
+            Tema deve ter no mínimo 4 caracteres.
+          </div>
+
+          <div class="invalid-feedback"
+               *ngIf="formGet.Tema.errors?.maxlength">
+            Tema deve ter no máximo 50 caracteres.
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-md-8">
+          <label>Local</label>
+          <input type="text"
+                 class="form-control"
+                 formControlName="Local"
+                 [ngClass]="{'is-invalid':
+                                formGet.Local.errors &&
+                                formGet.Local.touched }"
+                 placeholder="">
+
+          <div class="invalid-feedback"
+               *ngIf="formGet.Local.errors?.required">
+            Local é obrigatório
+          </div>
+        </div>
+
+        <div class="form-group col-md-4">
+          <label>Data e Hora</label>
+          <input type="datetime"
+                 class="form-control"
+                 formControlName="DataEvento"
+                 [ngClass]="{'is-invalid':
+                                formGet.DataEvento.errors &&
+                                formGet.DataEvento.touched }"
+                 placeholder="">
+
+          <div class="invalid-feedback"
+               *ngIf="formGet.DataEvento.errors?.required">
+            Data e hora é obrigatório
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-md-2">
+          <label>Qtd Pessoas</label>
+          <input type="text"
+                 class="form-control is-invalid"
+                 formControlName="QtdPessoas"
+                 [ngClass]="{'is-invalid':
+                                formGet.QtdPessoas.errors &&
+                                formGet.QtdPessoas.touched }"
+                 placeholder="">
+
+          <div class="invalid-feedback"
+               *ngIf="formGet.QtdPessoas.errors?.required">
+            Qtd Pessoas é obrigatório
+          </div>
+
+          <div class="invalid-feedback"
+               *ngIf="formGet.QtdPessoas.errors?.max">
+            Qtd Pessoas deve ter no máximo 120000 pessoas.
+          </div>
+        </div>
+
+        <div class="form-group col-md-4">
+          <label>Telefone</label>
+          <input type="text"
+                 class="form-control"
+                 formControlName="Telefone"
+                 [ngClass]="{'is-invalid':
+                                formGet.QtdPessoas.errors &&
+                                formGet.QtdPessoas.touched }"
+                 placeholder="(000) 90000-0000">
+
+          <div class="invalid-feedback"
+               *ngIf="formGet.Telefone.errors?.max">
+            Telefone é obrigatório
+          </div>
+        </div>
+
+        <div class="form-group col-md-6">
+          <label>Email</label>
+          <input type="text"
+                 class="form-control"
+                 formControlName="Email"
+                 [ngClass]="{'is-invalid':
+                                formGet.Email.errors &&
+                                formGet.Email.touched }"
+                 placeholder="e-mail">
+
+          <div class="invalid-feedback"
+               *ngIf="formGet.Email.errors?.max">
+            E-mail é obrigatório
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-footer">
+      <div class="d-flex">
+        <button class="btn btn-outline-secondary me-auto border">
+          Cancelar Alteração
+        </button>
+
+        <button class="btn btn-success">
+          <span class="spinner-border spinner-border-sm mr-1"></span>
+          Salvar Evento
+        </button>
+      </div>
+    </div>
+  </form>
+
+</div>
+
