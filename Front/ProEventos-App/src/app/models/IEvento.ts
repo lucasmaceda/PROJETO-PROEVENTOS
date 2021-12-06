@@ -3,15 +3,15 @@ import { IPalestranteEvento } from "./IPalestranteEvento";
 import { IRedeSocial } from "./IRedeSocial";
 
 export interface IEvento {
-  Id: number;
-  Local: string;
-  DataEvento?: Date;
-  Tema: string;
-  QtdPessoas: number;
-  ImagemURL: string;
-  Telefone: string;
-  Email: string;
-  Lotes: ILote[];
-  RedeSocial: IRedeSocial[];
-  Palestrante: IPalestranteEvento[];
+  id: number;
+  local: string;
+  dataEvento?: Date;
+  tema: string;
+  qtdPessoas: number;
+  imagemURL: string;
+  telefone: string;
+  email: string;
+  lotes: ILote[];
+  redesSociais: IRedeSocial[];
+  palestrantes: IPalestranteEvento[];
 }

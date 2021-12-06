@@ -46,27 +46,27 @@
 
       <tr *ngFor="let evento of eventosFiltrados"
           style="cursor: pointer;"
-          (click)="detalheEvento(evento.Id)">
+          (click)="detalheEvento(evento.id)">
 
         <td class="d-none d-md-table-cell">
 
           <img [collapse]="mostrarImagem"
                [isAnimated]="true"
-               src="/assets/{{evento.ImagemURL}}"
+               src="/assets/{{evento.imagemURL}}"
                [style.width.px]="larguraImagem"
                [style.margin.px]="margemImagem">
         </td>
-        <td>{{evento.Id}}</td>
-        <td>{{evento.Tema}}</td>
-        <td class="d-none d-md-table-cell">{{evento.Local}}</td>
-        <td>{{evento.DataEvento | DateTimeFormatPipe}}</td>
-        <td class="d-none d-md-table-cell">{{evento.QtdPessoas}}</td>
-        <td class="d-none d-md-table-cell">{{evento.Lotes[0].Nome | uppercase}}</td>
+        <td>{{evento.id}}</td>
+        <td>{{evento.tema}}</td>
+        <td class="d-none d-md-table-cell">{{evento.local}}</td>
+        <td>{{evento.dataEvento | DateTimeFormatPipe}}</td>
+        <td class="d-none d-md-table-cell">{{evento.qtdPessoas}}</td>
+        <td class="d-none d-md-table-cell">{{evento.lotes[0]?.Nome | uppercase}}</td>
         <td>
           <button type="button"
                   class="btn btn-danger btn-lg"
                   tooltip="Excluir"
-                  (click)="openModal(template)">
+                  (click)="openModal($event, template, evento.id)">
                   <i class="fa fa-trash"></i>
           </button>
         </td>
@@ -84,7 +84,7 @@
 
 <ng-template #template>
   <div class="modal-body text-center">
-    <p>Tem certeza que quer deletar este evento?</p>
+    <p>Tem certeza que quer deletar o Evento de código {{this.eventoId}}?</p>
     <button type="button" class="btn btn-default" (click)="confirm()">Sim</button>
     <button type="button" class="btn btn-primary" (click)="decline()">Não</button>
   </div>

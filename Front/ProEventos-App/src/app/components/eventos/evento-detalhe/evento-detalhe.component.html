@@ -8,24 +8,22 @@
           <label>Tema</label>
           <input type="text"
                  class="form-control"
-                 formControlName="Tema"
-                 [ngClass]="{'is-invalid':
-                                  formGet.Tema.errors &&
-                                  formGet.Tema.touched }"
+                 formControlName="tema"
+                 [ngClass]="cssValidator(formGet.tema)"
                  placeholder="Insira o Tema">
 
           <div class="invalid-feedback"
-               *ngIf="formGet.Tema.errors?.required">
+               *ngIf="formGet.tema.errors?.required">
             Tema é obrigatório.
           </div>
 
           <div class="invalid-feedback"
-               *ngIf="formGet.Tema.errors?.minlength">
+               *ngIf="formGet.tema.errors?.minlength">
             Tema deve ter no mínimo 4 caracteres.
           </div>
 
           <div class="invalid-feedback"
-               *ngIf="formGet.Tema.errors?.maxlength">
+               *ngIf="formGet.tema.errors?.maxlength">
             Tema deve ter no máximo 50 caracteres.
           </div>
         </div>
@@ -36,14 +34,12 @@
           <label>Local</label>
           <input type="text"
                  class="form-control"
-                 formControlName="Local"
-                 [ngClass]="{'is-invalid':
-                                formGet.Local.errors &&
-                                formGet.Local.touched }"
+                 formControlName="local"
+                 [ngClass]="cssValidator(formGet.local)"
                  placeholder="">
 
           <div class="invalid-feedback"
-               *ngIf="formGet.Local.errors?.required">
+               *ngIf="formGet.local.errors?.required">
             Local é obrigatório
           </div>
         </div>
@@ -52,14 +48,15 @@
           <label>Data e Hora</label>
           <input type="datetime"
                  class="form-control"
-                 formControlName="DataEvento"
-                 [ngClass]="{'is-invalid':
-                                formGet.DataEvento.errors &&
-                                formGet.DataEvento.touched }"
-                 placeholder="">
+                 formControlName="dataEvento"
+                 [ngClass]="cssValidator(formGet.dataEvento)"
+                 value="{{evento.dataEvento | DateTimeFormatPipe}}"
+                 placeholder=""
+                 bsDatepicker
+                 [bsConfig]="bsConfig">
 
           <div class="invalid-feedback"
-               *ngIf="formGet.DataEvento.errors?.required">
+               *ngIf="formGet.dataEvento.errors?.required">
             Data e hora é obrigatório
           </div>
         </div>
@@ -70,19 +67,17 @@
           <label>Qtd Pessoas</label>
           <input type="text"
                  class="form-control is-invalid"
-                 formControlName="QtdPessoas"
-                 [ngClass]="{'is-invalid':
-                                formGet.QtdPessoas.errors &&
-                                formGet.QtdPessoas.touched }"
+                 formControlName="qtdPessoas"
+                 [ngClass]="cssValidator(formGet.qtdPessoas)"
                  placeholder="">
 
           <div class="invalid-feedback"
-               *ngIf="formGet.QtdPessoas.errors?.required">
+               *ngIf="formGet.qtdPessoas.errors?.required">
             Qtd Pessoas é obrigatório
           </div>
 
           <div class="invalid-feedback"
-               *ngIf="formGet.QtdPessoas.errors?.max">
+               *ngIf="formGet.qtdPessoas.errors?.max">
             Qtd Pessoas deve ter no máximo 120000 pessoas.
           </div>
         </div>
@@ -91,14 +86,12 @@
           <label>Telefone</label>
           <input type="text"
                  class="form-control"
-                 formControlName="Telefone"
-                 [ngClass]="{'is-invalid':
-                                formGet.QtdPessoas.errors &&
-                                formGet.QtdPessoas.touched }"
+                 formControlName="telefone"
+                 [ngClass]="cssValidator(formGet.telefone)"
                  placeholder="(000) 90000-0000">
 
           <div class="invalid-feedback"
-               *ngIf="formGet.Telefone.errors?.max">
+               *ngIf="formGet.telefone.errors?.max">
             Telefone é obrigatório
           </div>
         </div>
@@ -107,14 +100,26 @@
           <label>Email</label>
           <input type="text"
                  class="form-control"
-                 formControlName="Email"
-                 [ngClass]="{'is-invalid':
-                                formGet.Email.errors &&
-                                formGet.Email.touched }"
+                 formControlName="email"
+                 [ngClass]="cssValidator(formGet.email)"
                  placeholder="e-mail">
 
           <div class="invalid-feedback"
-               *ngIf="formGet.Email.errors?.max">
+               *ngIf="formGet.email.errors?.max">
+            E-mail é obrigatório
+          </div>
+        </div>
+
+        <div class="form-group col-md-6">
+          <label>Imagem</label>
+          <input type="text"
+                 class="form-control"
+                 formControlName="imagemURL"
+                 [ngClass]="cssValidator(formGet.imagemURL)"
+                 placeholder="e-mail">
+
+          <div class="invalid-feedback"
+               *ngIf="formGet.imagemURL.errors?.required">
             E-mail é obrigatório
           </div>
         </div>
@@ -127,8 +132,10 @@
           Cancelar Alteração
         </button>
 
-        <button class="btn btn-success">
-          <span class="spinner-border spinner-border-sm mr-1"></span>
+        <button class="btn btn-success"
+                [disabled]="!form.valid"
+                (click)="salvarAlteracao()">
+          <!-- <span class="spinner-border spinner-border-sm mr-1"></span> -->
           Salvar Evento
         </button>
       </div>
