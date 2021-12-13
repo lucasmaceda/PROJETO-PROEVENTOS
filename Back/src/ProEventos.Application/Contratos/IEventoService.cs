@@ -2,7 +2,7 @@ using ProEventos.Application.Dtos;
 
 namespace ProEventos.Application.Contratos
 {
-    public interface IEventosService
+    public interface IEventoService
     {
         Task<EventoDto> AddEvento(EventoDto model);
         Task<EventoDto> UpdateEvento(int eventoId, EventoDto model);
