@@ -6,6 +6,7 @@ using ProEventos.Persistence;
 using ProEventos.Persistence.Contratos; 
 using AutoMapper;
 using System;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 

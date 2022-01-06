@@ -5,6 +5,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { IEvento } from 'src/app/models/IEvento';
 import { EventoService } from 'src/app/services/evento.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-evento-lista',
@@ -21,7 +22,7 @@ export class EventoListaComponent implements OnInit {
 
   public larguraImagem: number = 100;
   public margemImagem: number = 2;
-  public mostrarImagem: boolean = true;
+  public imagem: boolean = false;
   private _filtroLista: string = '';
 
   constructor(private eventoService: EventoService,
@@ -61,7 +62,13 @@ export class EventoListaComponent implements OnInit {
   }
 
   public ocultarImagem(): void {
-    this.mostrarImagem = !this.mostrarImagem;
+    this.imagem = !this.imagem;
+  }
+
+  public carregarImagem(imagemURL: string): string {
+    return imagemURL !== '' ?
+            `${environment.apiURL}resources/images/${imagemURL}`
+            : 'assets/img/semImagem.jpeg';
   }
 
   public carregarEventos(): void {

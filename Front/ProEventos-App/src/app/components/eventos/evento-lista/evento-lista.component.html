@@ -29,8 +29,8 @@
         <th class="d-none d-md-table-cell">
           <button type="button"
             class="btn btn-outline-light btn-sm" (click)="ocultarImagem()">
-            <i class="{{mostrarImagem ? 'fa fa-eye' : 'fa fa-eye-slash'}}"></i>
-            {{mostrarImagem ? 'Exibir' : 'Ocultar'}}
+            <i class="{{imagem ? 'fa fa-eye' : 'fa fa-eye-slash'}}"></i>
+            {{imagem ? 'Exibir' : 'Ocultar'}}
           </button>
         </th>
         <th>#</th>
@@ -50,9 +50,9 @@
 
         <td class="d-none d-md-table-cell">
 
-          <img [collapse]="mostrarImagem"
+          <img [collapse]="imagem"
                [isAnimated]="true"
-               src="/assets/{{evento.imagemURL}}"
+               [src]="carregarImagem(evento.imagemURL)"
                [style.width.px]="larguraImagem"
                [style.margin.px]="margemImagem">
         </td>
