@@ -31,7 +31,7 @@ namespace ProEventos.Application
             try
             {
                 var user = await _userManager.Users
-                                             .SingleOrDefaultAsync(user => user.UserName == userUpdateDto.Username.ToLower());
+                                             .SingleOrDefaultAsync(user => user.UserName.ToLower() == userUpdateDto.Username.ToLower());
 
                 return await _signInManager.CheckPasswordSignInAsync(user, password, false);
             }
@@ -62,7 +62,7 @@ namespace ProEventos.Application
             }
         }
 
-        public async Task<UserUpdateDto> GetUserByUsernameAsync(string username)
+        public async Task<UserUpdateDto> GetUserByUserNameAsync(string username)
         {
             try
             {
@@ -83,26 +83,31 @@ namespace ProEventos.Application
             try
             {
                 var user = await _userPersist.GetUserByUsernameAsync(userUpdateDto.Username);
-                if(user == null) return null;
+                if (user == null) return null;
+
+                userUpdateDto.Id = user.Id;
 
                 _mapper.Map(userUpdateDto, user);
 
-                var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-                var result = await _userManager.ResetPasswordAsync(user, token, userUpdateDto.Password);
+                if (userUpdateDto.Password != null) {
+                    var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+                    await _userManager.ResetPasswordAsync(user, token, userUpdateDto.Password);
+                }
 
                 _userPersist.Update<User>(user);
 
-                if(await _userPersist.SaveChangesAsync()) 
-                {   
+                if (await _userPersist.SaveChangesAsync())
+                {
                     var userRetorno = await _userPersist.GetUserByUsernameAsync(user.UserName);
+
                     return _mapper.Map<UserUpdateDto>(userRetorno);
                 }
 
                 return null;
             }
-            catch(System.Exception ex)
+            catch (System.Exception ex)
             {
-                throw new Exception($"Erro ao tentar atualizar usuario. Erro: {ex.Message}");
+                throw new Exception($"Erro ao tentar atualizar usuário. Erro: {ex.Message}");
             }
         }
 
@@ -111,7 +116,7 @@ namespace ProEventos.Application
             try
             {
                 return await _userManager.Users
-                                         .AnyAsync(user => user.UserName == username.ToLower());
+                                         .AnyAsync(user => user.UserName.ToLower() == username.ToLower());
             }
             catch(System.Exception ex)
             {
