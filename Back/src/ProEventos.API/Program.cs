@@ -87,6 +87,7 @@ builder.Services.AddScoped<IUserPersist, UserPersist>();
 
 builder.Services.AddEndpointsApiExplorer();
 
+builder.Services.AddCors();
 builder.Services.AddSwaggerGen(setup =>
 {
     var jwtSecurityScheme = new OpenApiSecurityScheme

@@ -1,7 +1,7 @@
 <app-titulo [titulo]="'Perfil'"></app-titulo>
 
 <div class="card rounded shadow-sm mb-3">
-  <form [formGroup]="form!">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="row p-3">
       <div class="col-lg-3 pt-1">
         <div class="card mb-3">
@@ -15,11 +15,10 @@
           </div>
 
           <div class="card-body">
-            <div class="h4 text-center mb-3">@UserName</div>
-            <div class="h7 text-bold pb-1"><b>Nome:</b> Miracles Lee Cross</div>
+            <div class="h4 text-center mb-3">@{{formGet.username.value}}</div>
+            <div class="h7 text-bold pb-1"><b>Nome:</b>{{formGet.primeiroNome.value + ' ' + formGet.ultimoNome.value}}</div>
             <div class="h7">
-              Developer of web applications, JavaScript, PHP, Java, Python, Ruby, Java, Node.js,
-              etc.
+              {{formGet.descricao.value}}
             </div>
           </div>
 
@@ -27,11 +26,11 @@
             <li class="list-group-item">
               <div class="row">
                 <div class="col-6 text-center border-right">
-                  <div class="h5">1342</div>
+                  <div class="h5">0</div>
                   <div class="h6 text-muted">Eventos Ministrados</div>
                 </div>
                 <div class="col-6 text-center">
-                  <div class="h5">1342</div>
+                  <div class="h5">0</div>
                   <div class="h6 text-muted">Eventos Participados</div>
                 </div>
               </div>
@@ -49,16 +48,16 @@
 
           <div class="form-group col">
             <label>Título</label>
-            <select class="form-control">
-              <option value=""></option>
-              <option value="0">Não Quero</option>
-              <option value="Senhorita">Tecnólogo(a)</option>
-              <option value="Senhorita">Bacharel</option>
-              <option value="Senhorita">Especialista</option>
-              <option value="Senhorita">Pós Graduado(a)</option>
-              <option value="Senhorita">Mestre</option>
-              <option value="Senhorita">Doutor(a)</option>
-              <option value="Senhorita">Pós Doc</option>
+            <select class="form-control" formControlName="titulo"
+                    [ngClass]="{ 'is-invalid': formGet.titulo.errors && formGet.titulo.touched }">
+              <option value="NaoInformado">Não Quero</option>
+              <option value="Tecnologo">Tecnólogo(a)</option>
+              <option value="Bacharel">Bacharel</option>
+              <option value="Especialista">Especialista</option>
+              <option value="PosGraduado">Pós Graduado(a)</option>
+              <option value="Mestrado">Mestre</option>
+              <option value="Douturado">Doutor(a)</option>
+              <option value="PosDoutorado">Pós Doc</option>
             </select>
           </div>
 
@@ -117,14 +116,25 @@
           <div class="form-group col">
             <label>Telefone</label>
             <input type="text"
+                   formControlName="phoneNumber"
                    class="form-control"
-                   formControlName="telefone" />
+                  [ngClass]="{ 'is-invalid': formGet.phoneNumber.errors && formGet.phoneNumber.touched }" />
+
+            <div *ngIf="formGet.phoneNumber.errors && formGet.phoneNumber.touched"
+                 class="invalid-feedback">
+
+              <div *ngIf="formGet.phoneNumber.errors.required">
+                Telefone é obrigatório
+              </div>
+            </div>
           </div>
 
           <div class="form-group col">
             <label>Função</label>
-            <select class="form-control">
+            <select class="form-control" formControlName="funcao"
+                    [ngClass]="{ 'is-invalid': formGet.funcao.errors && formGet.funcao.touched }">
               <option value=""></option>
+              <option value="NaoInformado">Não Informado</option>
               <option value="Participante">Participante</option>
               <option value="Palestrante">Palestrante</option>
             </select>
@@ -148,19 +158,19 @@
             <label for="">Senha:</label>
             <input class="form-control"
                    type="password"
-                   formControlName="senha"
+                   formControlName="password"
                    placeholder="Digite uma Senha"
                    [ngClass]="{'is-invalid':
-                                  formGet.senha.errors &&
-                                  formGet.senha.touched }" />
+                                  formGet.password.errors &&
+                                  formGet.password.touched }" />
 
             <div class="invalid-feedback"
-                 *ngIf="formGet.senha.errors?.required">
+                 *ngIf="formGet.password.errors?.required">
               Senha é obrigatório.
             </div>
 
             <div class="invalid-feedback"
-                 *ngIf="formGet.senha.errors?.minlength">
+                 *ngIf="formGet.password.errors?.minlength">
               Senha deve ter no mínimo 6 caracteres.
             </div>
           </div>
@@ -169,19 +179,19 @@
             <label for="">Confirmar Senha:</label>
             <input class="form-control"
                    type="password"
-                   formControlName="confirmeSenha"
+                   formControlName="confirmePassword"
                    placeholder="Confirme a Senha"
                    [ngClass]="{'is-invalid':
-                                  formGet.confirmeSenha.errors &&
-                                  formGet.confirmeSenha.touched }" />
+                                  formGet.confirmePassword.errors &&
+                                  formGet.confirmePassword.touched }" />
 
             <div class="invalid-feedback"
-                 *ngIf="formGet.confirmeSenha.errors?.required">
+                 *ngIf="formGet.confirmePassword.errors?.required">
               Confirmação de senha obrigatória.
             </div>
 
             <div class="invalid-feedback"
-                 *ngIf="formGet.confirmeSenha.errors?.mustMatch">
+                 *ngIf="formGet.confirmePassword.errors?.mustMatch">
               Senhas não são iguais.
             </div>
           </div>
@@ -190,11 +200,12 @@
     </div>
     <div class="card-footer">
       <div class="d-flex">
-        <button class="btn btn-outline-secondary me-auto border">
+        <button (click)="resetForm($event)"
+                class="btn btn-outline-secondary me-auto border">
           Cancelar Alteração
         </button>
-        <button class="btn btn-success">
-          <span class="spinner-border spinner-border-sm mr-1"></span>
+
+        <button class="btn btn-success" type="submit">
           Salvar Alteração
         </button>
       </div>

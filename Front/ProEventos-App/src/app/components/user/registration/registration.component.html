@@ -5,7 +5,7 @@
 
 		<div class="text-center col-md-12 my-auto side-heder">
 			<h1>Cadastro de Usuário</h1>
-			<img src="../../../../assets/registerImage.png"
+			<img src="../../../../assets/img/registerImage.png"
            class="my-4"
            alt=""
            width="400px">
@@ -14,7 +14,7 @@
 
 	<div class="col-md-6">
 
-    <form [formGroup]="form!" class="p-1">
+    <form [formGroup]="form" class="p-1" (ngSubmit)="register()">
       <div class="pb-2 d-block d-md-none">
         <h3 class="border-bottom">
           Cadastro de Usuário
@@ -80,14 +80,14 @@
         <label for="">Usuario:</label>
         <input class="form-control"
                type="text"
-               formControlName="userName"
+               formControlName="username"
                placeholder="Insira o nome de Usuário"
                [ngClass]="{'is-invalid':
-                              formGet.userName.errors &&
-                              formGet.userName.touched }" />
+                              formGet.username.errors &&
+                              formGet.username.touched }" />
 
         <div class="invalid-feedback"
-             *ngIf="formGet.userName.errors?.required">
+             *ngIf="formGet.username.errors?.required">
           Usuário é obrigatório.
         </div>
       </div>
@@ -97,19 +97,19 @@
           <label for="">Senha:</label>
           <input class="form-control"
                  type="password"
-                 formControlName="senha"
+                 formControlName="password"
                  placeholder="Digite uma Senha"
                  [ngClass]="{'is-invalid':
-                                formGet.senha.errors &&
-                                formGet.senha.touched }" />
+                                formGet.password.errors &&
+                                formGet.password.touched }" />
 
           <div class="invalid-feedback"
-               *ngIf="formGet.senha.errors?.required">
+               *ngIf="formGet.password.errors?.required">
             Senha é obrigatório.
           </div>
 
           <div class="invalid-feedback"
-               *ngIf="formGet.senha.errors?.minlength">
+               *ngIf="formGet.password.errors?.minlength">
             Senha deve ter no mínimo 6 caracteres.
           </div>
         </div>
@@ -118,19 +118,19 @@
           <label for="">Confirmar Senha:</label>
           <input class="form-control"
                  type="password"
-                 formControlName="confirmeSenha"
+                 formControlName="confirmePassword"
                  placeholder="Confirme a Senha"
                  [ngClass]="{'is-invalid':
-                                formGet.confirmeSenha.errors &&
-                                formGet.confirmeSenha.touched }" />
+                                formGet.confirmePassword.errors &&
+                                formGet.confirmePassword.touched }" />
 
           <div class="invalid-feedback"
-               *ngIf="formGet.confirmeSenha.errors?.required">
+               *ngIf="formGet.confirmePassword.errors?.required">
             Confirmação de senha obrigatória.
           </div>
 
           <div class="invalid-feedback"
-               *ngIf="formGet.confirmeSenha.errors?.mustMatch">
+               *ngIf="formGet.confirmePassword.errors?.mustMatch">
             Senhas não são iguais.
           </div>
         </div>
@@ -148,7 +148,9 @@
         </div>
       </div>
 
-      <button class="btn btn-lg col-12 w-100 btn-success btn-block px-5">
+      <button class="btn btn-lg col-12 w-100 btn-success btn-block px-5"
+              type="submit"
+              [disabled]="!form.valid">
         Registar
       </button>
 
