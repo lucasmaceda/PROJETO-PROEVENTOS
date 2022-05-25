@@ -1,214 +1,75 @@
-<app-titulo [titulo]="'Perfil'"></app-titulo>
+<app-titulo [titulo]="'Perfil' + (ehPalestrante ? ' Palestrante' : '')" [iconClass]="'fa fa-address-card'"></app-titulo>
+<div class="card rounded shadow-sm">
 
-<div class="card rounded shadow-sm mb-3">
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="row p-3">
       <div class="col-lg-3 pt-1">
         <div class="card mb-3">
-          <div class="card-header"></div>
-          <div class="d-flex align-self-center pt-3">
-            <a>
-              <img
-              src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRbezqZpEuwGSvitKy3wrwnth5kysKdRqBW54cAszm_wiutku3R"
-              name="aboutme" width="120" height="120" class="rounded-circle">
-            </a>
+          <div class="card-header">
+            <input type="file" #file (change)="onFileChange($event)" style="display: none;">
           </div>
-
+          <div class="d-flex align-self-center pt-3">
+              <img
+                [src]="imagemURL"
+                class="rounded-circle"
+                (click)="file.click()"
+                name="aboutme" width="120" height="120"
+                style="cursor: pointer;">
+          </div>
           <div class="card-body">
-            <div class="h4 text-center mb-3">@{{formGet.username.value}}</div>
-            <div class="h7 text-bold pb-1"><b>Nome:</b>{{formGet.primeiroNome.value + ' ' + formGet.ultimoNome.value}}</div>
+            <div class="h4 text-center mb-3">@{{usuario.userName}}</div>
+            <div class="h7 text-bold pb-1"><b>Nome:</b> {{usuario.primeiroNome + ' ' + usuario.ultimoNome}}</div>
             <div class="h7">
-              {{formGet.descricao.value}}
+              {{usuario.descricao}}
             </div>
           </div>
-
           <ul class="list-group list-group-flush">
             <li class="list-group-item">
               <div class="row">
                 <div class="col-6 text-center border-right">
                   <div class="h5">0</div>
-                  <div class="h6 text-muted">Eventos Ministrados</div>
+                  <div class="h6 text-muted">Meus Eventos Criados</div>
                 </div>
                 <div class="col-6 text-center">
                   <div class="h5">0</div>
-                  <div class="h6 text-muted">Eventos Participados</div>
+                  <div class="h6 text-muted">Eventos como {{ehPalestrante ? ' Palestrante' : 'Participante'}}</div>
                 </div>
               </div>
             </li>
           </ul>
-
           <div class="card-footer"></div>
         </div>
       </div>
       <div class="col-lg-9">
-        <div class="row">
-          <div class="form-group col-12">
-            <h3 class="border-bottom">Detalhe Perfil</h3>
-          </div>
+        <tabset>
+          <tab class="border border-top-0 p-3">
+            <ng-template tabHeading>
+              <i class="fa fa-address-card me-2"></i><span>Perfil</span>
+            </ng-template>
 
-          <div class="form-group col">
-            <label>Título</label>
-            <select class="form-control" formControlName="titulo"
-                    [ngClass]="{ 'is-invalid': formGet.titulo.errors && formGet.titulo.touched }">
-              <option value="NaoInformado">Não Quero</option>
-              <option value="Tecnologo">Tecnólogo(a)</option>
-              <option value="Bacharel">Bacharel</option>
-              <option value="Especialista">Especialista</option>
-              <option value="PosGraduado">Pós Graduado(a)</option>
-              <option value="Mestrado">Mestre</option>
-              <option value="Douturado">Doutor(a)</option>
-              <option value="PosDoutorado">Pós Doc</option>
-            </select>
-          </div>
-
-          <div class="form-group col">
-            <label>Primeiro Nome</label>
-            <input type="text"
-                   class="form-control"
-                   formControlName="primeiroNome"
-                   [ngClass]="{'is-invalid':
-                                  formGet.primeiroNome.errors &&
-                                  formGet.primeiroNome.touched }"/>
-
-            <div class="invalid-feedback"
-                 *ngIf="formGet.primeiroNome.errors?.required">
-              Primeiro Nome é obrigatório.
+            <app-perfil-detalhe (changeFormValue)="setFormValue($event)"></app-perfil-detalhe>
+          </tab>
+          <tab *ngIf="ehPalestrante" class="border border-top-0 p-3">
+            <ng-template tabHeading>
+              <i class="fa fa-user me-2"></i><span>Palestrante</span>
+            </ng-template>
+            <div class="form-group">
+              <h3 class="border-bottom">Palestrante</h3>
             </div>
-          </div>
 
-          <div class="form-group col">
-            <label>Último nome</label>
-            <input type="text"
-                   class="form-control"
-                   formControlName="ultimoNome"
-                   [ngClass]="{'is-invalid':
-                                  formGet.ultimoNome.errors &&
-                                  formGet.ultimoNome.touched }" />
-
-            <div class="invalid-feedback"
-                 *ngIf="formGet.ultimoNome.errors?.required">
-              Último nome é obrigatório.
+            <app-palestrante-detalhe></app-palestrante-detalhe>
+          </tab>
+          <tab *ngIf="ehPalestrante" class="border border-top-0 p-3">
+            <ng-template tabHeading>
+              <i class="fa fa-share-square me-2"></i><span>Rede Social</span>
+            </ng-template>
+            <div class="form-group">
+              <h3 class="border-bottom">Rede Social</h3>
             </div>
-          </div>
+
+            <app-redesSociais></app-redesSociais>
+          </tab>
+        </tabset>
         </div>
+</div>
 
-        <div class="row">
-          <div class="form-group col">
-            <label>E-mail</label>
-            <input type="text"
-                   class="form-control"
-                   formControlName="email"
-                   [ngClass]="{'is-invalid':
-                                  formGet.email.errors &&
-                                  formGet.email.touched }" />
-
-            <div class="invalid-feedback"
-                 *ngIf="formGet.email.errors?.required">
-              E-mail é obrigatório.
-            </div>
-
-            <div class="invalid-feedback"
-                 *ngIf="formGet.email.errors?.email">
-              Insira um e-mail válido.
-            </div>
-          </div>
-
-          <div class="form-group col">
-            <label>Telefone</label>
-            <input type="text"
-                   formControlName="phoneNumber"
-                   class="form-control"
-                  [ngClass]="{ 'is-invalid': formGet.phoneNumber.errors && formGet.phoneNumber.touched }" />
-
-            <div *ngIf="formGet.phoneNumber.errors && formGet.phoneNumber.touched"
-                 class="invalid-feedback">
-
-              <div *ngIf="formGet.phoneNumber.errors.required">
-                Telefone é obrigatório
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group col">
-            <label>Função</label>
-            <select class="form-control" formControlName="funcao"
-                    [ngClass]="{ 'is-invalid': formGet.funcao.errors && formGet.funcao.touched }">
-              <option value=""></option>
-              <option value="NaoInformado">Não Informado</option>
-              <option value="Participante">Participante</option>
-              <option value="Palestrante">Palestrante</option>
-            </select>
-          </div>
-
-          <form-group class="col-12">
-            <label>Descrição</label>
-            <input type="text"
-                   class="form-control"
-                   formControlName="descricao" />
-          </form-group>
-        </div>
-
-        <div>
-          <h3 class="pt-3 border-bottom">Mudar Senha</h3>
-          <p>Caso mude de senha, preencha os campos abaixo:</p>
-        </div>
-
-        <div class="row">
-          <div class="form-group col-sm">
-            <label for="">Senha:</label>
-            <input class="form-control"
-                   type="password"
-                   formControlName="password"
-                   placeholder="Digite uma Senha"
-                   [ngClass]="{'is-invalid':
-                                  formGet.password.errors &&
-                                  formGet.password.touched }" />
-
-            <div class="invalid-feedback"
-                 *ngIf="formGet.password.errors?.required">
-              Senha é obrigatório.
-            </div>
-
-            <div class="invalid-feedback"
-                 *ngIf="formGet.password.errors?.minlength">
-              Senha deve ter no mínimo 6 caracteres.
-            </div>
-          </div>
-
-          <div class="form-group col-sm">
-            <label for="">Confirmar Senha:</label>
-            <input class="form-control"
-                   type="password"
-                   formControlName="confirmePassword"
-                   placeholder="Confirme a Senha"
-                   [ngClass]="{'is-invalid':
-                                  formGet.confirmePassword.errors &&
-                                  formGet.confirmePassword.touched }" />
-
-            <div class="invalid-feedback"
-                 *ngIf="formGet.confirmePassword.errors?.required">
-              Confirmação de senha obrigatória.
-            </div>
-
-            <div class="invalid-feedback"
-                 *ngIf="formGet.confirmePassword.errors?.mustMatch">
-              Senhas não são iguais.
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="card-footer">
-      <div class="d-flex">
-        <button (click)="resetForm($event)"
-                class="btn btn-outline-secondary me-auto border">
-          Cancelar Alteração
-        </button>
-
-        <button class="btn btn-success" type="submit">
-          Salvar Alteração
-        </button>
-      </div>
-    </div>
-  </form>
 </div>

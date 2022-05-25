@@ -37,23 +37,32 @@ import { AccountService } from './services/account.service';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { HomeComponent } from './components/Home/Home.component';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+import { PerfilDetalheComponent } from './components/user/perfil/perfil-detalhe/perfil-detalhe.component';
+import { PalestranteDetalheComponent } from './components/palestrantes/palestrante-detalhe/palestrante-detalhe.component';
+import { PalestranteListaComponent } from './components/palestrantes/palestrante-lista/palestrante-lista.component';
+import { RedesSociaisComponent } from './components/redesSociais/redesSociais.component';
 
 defineLocale('pt-br', ptBrLocale);
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
     EventosComponent,
     PalestrantesComponent,
-    NavComponent,
-    DateTimeFormatPipe,
+    PalestranteListaComponent,
+    PalestranteDetalheComponent,
     ContatosComponent,
     DashboardComponent,
-    TituloComponent,
     PerfilComponent,
+    PerfilDetalheComponent,
+    RedesSociaisComponent,
+    NavComponent,
+    TituloComponent,
+    DateTimeFormatPipe,
     EventoDetalheComponent,
     EventoListaComponent,
+    HomeComponent,
     UserComponent,
     LoginComponent,
     RegistrationComponent
@@ -71,6 +80,7 @@ defineLocale('pt-br', ptBrLocale);
     ModalModule.forRoot(),
     BsDatepickerModule.forRoot(),
     PaginationModule.forRoot(),
+    TabsModule.forRoot(),
     ToastrModule.forRoot({
       timeOut: 5000,
       positionClass: 'toast-bottom-right',

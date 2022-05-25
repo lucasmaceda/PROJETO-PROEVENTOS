@@ -16,7 +16,7 @@ namespace ProEventos.Persistence
         }
 
         // PALESTRANTES
-        public async Task<PageList<Palestrante>> GetAllPalestrantesAsync(PageParams pageParams, bool includeEventos)
+        public async Task<PageList<Palestrante>> GetAllPalestrantesAsync(PageParams pageParams, bool includeEventos = false)
         {
             IQueryable<Palestrante> query = _context.Palestrantes
                                                 .Include(p => p.User)
@@ -28,7 +28,7 @@ namespace ProEventos.Persistence
                           .ThenInclude(pe => pe.Evento);
             }
 
-            query = query
+            query = query.AsNoTracking()
                     .Where(p => (p.MiniCurriculo.ToLower().Contains(pageParams.Term.ToLower()) ||
                                  p.User.PrimeiroNome.ToLower().Contains(pageParams.Term.ToLower()) ||
                                  p.User.UltimoNome.ToLower().Contains(pageParams.Term.ToLower())) &&
@@ -51,7 +51,7 @@ namespace ProEventos.Persistence
                           .ThenInclude(pe => pe.Evento);
             }
 
-            query = query.OrderBy(p => p.Id)
+            query = query.AsNoTracking().OrderBy(p => p.Id)
                          .Where(p => p.UserId == userId);
                          
             return await query.FirstOrDefaultAsync();

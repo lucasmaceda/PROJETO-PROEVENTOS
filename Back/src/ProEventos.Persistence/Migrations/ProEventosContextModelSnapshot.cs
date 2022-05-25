@@ -309,7 +309,6 @@ namespace ProEventos.Persistence.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("MiniCurriculo")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<int>("UserId")
